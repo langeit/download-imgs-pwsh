@@ -20,27 +20,16 @@ $FileName0 = $URL+$Var+".jpg"
 $FileName1 = $URL+$Var+".png"
 
 Try {
+	#Download JPG files
 	Invoke-WebRequest -Uri $FileName0 -OutFile $Dest -ErrorAction Stop
 } Catch { 
 	$StatusCode = [int]$_.Exception.Response.StatusCode
 
 	if ($StatusCode -eq 404) {
+		#Download PNG files
 		Invoke-WebRequest -Uri $FileName1 -OutFile $Dest
 	}
 }
-
-
-#Check if the file exist
-#If(Invoke-WebRequest $fileName0 -ErrorAction Stop)
-#{
-#	#Download JPG
-#	Write-Host Downloading $FileName0
-#	Invoke-WebRequest -Uri $FileName0 -OutFile $Dest
-#} Else {
-#	#Download PNG
-#	Write-Host Downloading $FileName1
-#	Invoke-WebRequest -Uri $FileName1 -OutFile $Dest
-#}
 }
 # All files downloades
 Write-Host All files downloaded.
